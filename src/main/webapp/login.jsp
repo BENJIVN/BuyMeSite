@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,7 +27,7 @@
 			<tr>
 				<td><a href="AdminRepLogin.jsp">Click here if you are longing in as an Admin or a Customer Rep!</a></td>
 			<tr>
-				<td><a href ="registerPage.jsp"> Click here if you need an account!</a></td>
+				<td><a href ="register.jsp"> Click here if you need an account!</a></td>
 			</tr>
 			</table>
 		</form>
