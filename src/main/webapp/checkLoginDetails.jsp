@@ -20,7 +20,7 @@ String pwd = request.getParameter("password");
 
 Class.forName("com.mysql.jdbc.Driver");
 
-Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BuyMe","root","Breachmain1$");
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BuyMe","root","336p@sSw0rd");
 
 Statement st = con.createStatement();
 
