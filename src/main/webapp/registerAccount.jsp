@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*" 
+import="com.cs336.pkg.*"
+%>
     
 <!DOCTYPE html>
 <html>
@@ -13,10 +15,14 @@
 
 <%
 
-Class.forName("com.mysql.jdbc.Driver");
-Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BuyMe","root","336p@sSw0rd");
+//Database connection
+	ApplicationDB db = new ApplicationDB();
+	Connection con = db.getConnection();
+	
+	//Create the sql statement 
+	
+	Statement stmt = con.createStatement();
 
-Statement st = con.createStatement();
 String username = request.getParameter("username");
 String password = request.getParameter("password");
 String insert = "INSERT INTO users(username, password)" + "VALUES(?, ?)";

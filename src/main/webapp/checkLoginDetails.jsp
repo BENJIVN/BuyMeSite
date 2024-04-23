@@ -18,7 +18,7 @@ import="com.cs336.pkg.*"
 	ResultSet rs = stmt.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'");
 	
 	if (rs.next()) {
-		session.setAttribute("user", userid); // the username will be stored in the session
+		session.setAttribute("username", userid); // the username will be stored in the session
 		out.println("welcome " + userid);
 		out.println("<a href='logout.jsp'>Log out</a>");
 		response.sendRedirect("Home.jsp");
@@ -26,5 +26,7 @@ import="com.cs336.pkg.*"
 		out.println("Invalid password <a href='login.jsp'>try again</a>");
 	}
 	
+	rs.close();
+	stmt.close();
 	con.close();
 %>
