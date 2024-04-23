@@ -1,40 +1,30 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
- --%>
- 
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*" 
+import="com.cs336.pkg.*"
+%>
 
 <%
-String userid = request.getParameter("username");
-
-String pwd = request.getParameter("password");
-
-Class.forName("com.mysql.jdbc.Driver");
-
-Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BuyMe","root","336p@sSw0rd");
-
-Statement st = con.createStatement();
-
-ResultSet rs;
-
-rs = st.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'");
-
-if (rs.next()) {
-	session.setAttribute("user", userid); // the username will be stored in the session
-	out.println("welcome " + userid);
-	out.println("<a href='logout.jsp'>Log out</a>");
-	response.sendRedirect("success.jsp");
-} else {
-	out.println("Invalid password <a href='login.jsp'>try again</a>");
-}
+	//Database connection
+	ApplicationDB db = new ApplicationDB();
+	Connection con = db.getConnection();
+	
+	//Create the sql statement 
+	
+	Statement stmt = con.createStatement();
+	
+	String userid = request.getParameter("username");
+	
+	String pwd = request.getParameter("password");
+	
+	ResultSet rs = stmt.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'");
+	
+	if (rs.next()) {
+		session.setAttribute("user", userid); // the username will be stored in the session
+		out.println("welcome " + userid);
+		out.println("<a href='logout.jsp'>Log out</a>");
+		response.sendRedirect("Home.jsp");
+	} else {
+		out.println("Invalid password <a href='login.jsp'>try again</a>");
+	}
+	
+	con.close();
 %>
