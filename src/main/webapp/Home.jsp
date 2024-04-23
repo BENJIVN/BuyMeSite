@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="header">
-    <% if ((session.getAttribute("user") == null)) { %>
+    <% if ((session.getAttribute("username") == null)) { %>
         <p class="login-message">You are not logged in<br/></p>
         <a href="login.jsp">Please Login</a>
     <% } else { %>
