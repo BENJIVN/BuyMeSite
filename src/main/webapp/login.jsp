@@ -25,10 +25,10 @@
 			</tr>
 			
 			<tr>
-				<td><a href="AdminLogin.jsp">Click here if you are longing in as an Admin!</a></td>
+				<td><a href="AdminLogin.jsp">Click here if you're an Administrator!</a></td>
 			</tr>
 			<tr>
-				<td><a href="CustomerRepLogin.jsp">Click here if you are longing in as a Customer Rep!</a></td>
+				<td><a href="CustomerRepLogin.jsp">Click here if you're a Customer Representative!</a></td>
 			</tr>
 				<td><a href ="register.jsp"> Click here if you need an account!</a></td>
 			</tr>
