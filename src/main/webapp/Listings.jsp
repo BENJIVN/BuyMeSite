@@ -21,7 +21,7 @@ import="com.cs336.pkg.*"
             </tr>
         </table>
         
-         <h2>Your Listings</h2>
+         <h2>All Listings</h2>
         <table align="center" border="1">
             <tr>
                 <th>Make</th>
@@ -31,6 +31,7 @@ import="com.cs336.pkg.*"
                 <th>Initial Price</th>
                 <th>Min Sale Price</th>
                 <th>Closing Date/Time</th>
+                <th>Open/Closed Status</th>
             </tr>
             <%
                 Connection con = null;
@@ -39,7 +40,7 @@ import="com.cs336.pkg.*"
                 try {
                     ApplicationDB db = new ApplicationDB();
                     con = db.getConnection();
-                    String query = "SELECT make, model, color, year, initial_price, min_sale, date_time FROM listings";
+                    String query = "SELECT make, model, color, year, initial_price, min_sale, date_time, open_close FROM listings";
                     ps = con.prepareStatement(query);
                     rs = ps.executeQuery();
                     while (rs.next()) {
@@ -54,6 +55,7 @@ import="com.cs336.pkg.*"
                             <td><%= initialPrice != null ? initialPrice.toPlainString() : "N/A" %></td>
                             <td><%= minSale != null ? minSale.toPlainString() : "N/A" %></td>
                             <td><%= rs.getTimestamp("date_time") != null ? rs.getTimestamp("date_time").toString() : "N/A" %></td>
+                            <td><%= rs.getInt("open_close") == 0 ? "Open" : "Closed" %></td>
                         </tr>
                         <%
                     }
