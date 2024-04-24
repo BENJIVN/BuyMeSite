@@ -61,7 +61,10 @@ import="com.cs336.pkg.*"
 			</tr>
 			
 			<tr>
-	   			<td><a href="account.jsp">Go Back</a></td>
+	   			<td><a href="Listings.jsp">Go Back</a></td>
+	   		</tr>
+	   		<tr>
+	   			<td><a href="logout.jsp">Log Out</a></td>
 	   		</tr>
 		
 		</table>

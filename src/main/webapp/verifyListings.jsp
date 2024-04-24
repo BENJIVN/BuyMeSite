@@ -7,13 +7,15 @@ import="com.cs336.pkg.*"
 	ApplicationDB db = new ApplicationDB();
 	Connection con = db.getConnection();
 	
-	Statement stmt = con.createStatement();
+	//Statement stmt = con.createStatement();
 	
 	//seller name
 	String username = (String) session.getAttribute("username"); 
 	if (username == null) {
 		response.sendRedirect("login.jsp");
+		return; //stops if user is not logged in 
 	}
+	
 	
 	/* /* 1. make, 2. model, 3. color, 4. year, 5. initial price, 
 	6. min. sale price, 7. closing date/time */
@@ -39,9 +41,10 @@ import="com.cs336.pkg.*"
 	ps.setString(7, closingDateTime);
 	ps.executeUpdate();
 	
+	response.sendRedirect("Listings.jsp");
 	//insert into listings posts??
 	
-	stmt.close();
+	//stmt.close();
 	ps.close();
 	con.close();
 %>

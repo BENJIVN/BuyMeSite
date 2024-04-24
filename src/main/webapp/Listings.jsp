@@ -11,9 +11,23 @@ import="com.cs336.pkg.*"
 <title>Listings</title>
 </head>
 <body>
+	<div style="text-align: center">
+   	<h1>CARS</h1>
+   	<table align="center">
+   		<tr>  
+   			<td><a href="Q&Ahome.jsp">Q&A Board</a></td>
+   			<td>~</td>
+   			<td><a href="Home.jsp">Home</a></td>
+       		<td>~</td>
+			<td><a href="Account.jsp">Account</a></td>
+			<td>~</td>
+			<td><a href="logout.jsp">Logout</a></td>
+  			</tr>
+   	</table>
+    
+   	</div>
+    	
 	 <div style="text-align: center">
-        <h1>Listings</h1>
-        
         <h2>Create a Listing!</h2>
         <table align="center">
             <tr>
@@ -21,6 +35,20 @@ import="com.cs336.pkg.*"
             </tr>
         </table>
         
+	   	 <div style="text-align: center">
+		   	<form action="" method="get">
+		        <label for="sortby">Sort by:</label>
+		        <select name="sortby" onchange="this.form.submit()">
+		            <option value="make">Make</option>
+		            <option value="model">Model</option>
+		            <option value="color">Color</option>
+		            <option value="year">Year</option>
+		            <option value="initial_price">Initial Price</option>
+		            <option value="min_sale">Min Sale Price</option>
+		            <option value="date_time">Closing Date/Time</option>
+		        </select>
+		   	</form>
+		</div>
          <h2>All Listings</h2>
         <table align="center" border="1">
             <tr>
@@ -34,13 +62,22 @@ import="com.cs336.pkg.*"
                 <th>Open/Closed Status</th>
             </tr>
             <%
+            	String sort = request.getParameter("sortby");
+	            List<String> validSortFields = Arrays.asList("make", "model", "color", "year", "initial_price", "min_sale", "date_time");
+	            String sortByField = "make"; //maybe we change this default for now 
+	            
+	            if(sort != null && validSortFields.contains(sort)){
+	            	sortByField = sort;
+	            } //order by based on validSortFields
+	            
                 Connection con = null;
                 PreparedStatement ps = null;
                 ResultSet rs = null;
+                
                 try {
                     ApplicationDB db = new ApplicationDB();
                     con = db.getConnection();
-                    String query = "SELECT make, model, color, year, initial_price, min_sale, date_time, open_close FROM listings";
+                    String query = "SELECT listing_id, make, model, color, year, initial_price, min_sale, date_time, open_close FROM listings ORDER BY " + sortByField;
                     ps = con.prepareStatement(query);
                     rs = ps.executeQuery();
                     while (rs.next()) {
@@ -56,15 +93,17 @@ import="com.cs336.pkg.*"
                             <td><%= minSale != null ? minSale.toPlainString() : "N/A" %></td>
                             <td><%= rs.getTimestamp("date_time") != null ? rs.getTimestamp("date_time").toString() : "N/A" %></td>
                             <td><%= rs.getInt("open_close") == 0 ? "Open" : "Closed" %></td>
+                            <td>
+		                        <form action="viewListing.jsp" method="post">
+		                            <input type="hidden" name="listing_id" value="<%= rs.getInt("listing_id") %>" />
+		                            <input type="submit" value="Details" />
+		                        </form>
+                   			</td>
                         </tr>
                         <%
                     }
                 } catch (SQLException e) {
                     out.println("Error retrieving listings: " + e.getMessage());
-                } finally {
-                    try { if (rs != null) rs.close(); } catch (Exception e) {}
-                    try { if (ps != null) ps.close(); } catch (Exception e) {}
-                    try { if (con != null) con.close(); } catch (Exception e) {}
                 }
             %>
         </table>
