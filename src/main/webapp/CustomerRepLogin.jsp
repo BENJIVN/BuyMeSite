@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Customer Representative Login</title>
 </head>
 <body>
 <h2 style="text-align: center">Input customer representative login details:</h2>
