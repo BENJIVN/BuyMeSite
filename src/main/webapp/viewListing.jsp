@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.cs336.pkg.*" import="java.io.*,java.util.*,java.sql.*" %> 
+<%@ page import="com.cs336.pkg.*" import="java.io.*,java.util.*,java.sql.*, java.math.BigDecimal" %> 
 <html>
 <head>
 <meta charset="UTF-8">
@@ -46,14 +46,75 @@
 		}catch (Exception e){
 			e.printStackTrace();
 		}finally{
-			rs.close();
-			pstt.close();
-			con.close();
-			
 		}
 	%>
-	
-	<h1>WANNA MAKE A BID?</h1>
-	
+	<h1>Interested in the listing?</h1>
+		<form method="post" action="verifyInterested.jsp">
+			<table>
+				<tr>
+					<td><input type="submit" value="Keep Me Alerted!"/></td>
+				</tr>
+				
+			
+			</table>
+		</form>
+	<h1>Bid History</h1>
+	<%          
+                try {
+                    String query = "SELECT username, price, bid_dt FROM places ORDER BY bid_dt";
+                    pstt = con.prepareStatement(query);
+                    rs = pstt.executeQuery();
+                    while (rs.next()) {
+                        BigDecimal price = rs.getBigDecimal("price");
+                       
+     %>
+                        <tr>
+                            <td><%= rs.getString("username") %></td>                           
+                            <td><%= price != null ? price.toPlainString() : "N/A" %></td>                          
+                            <td><%= rs.getTimestamp("bid_dt") != null ? rs.getTimestamp("bid_dt").toString() : "N/A" %></td>                       
+                        </tr>
+     <%
+                    }
+                } catch (SQLException e) {
+                    out.println("Error no bids currently: " + e.getMessage());
+                }
+				rs.close();
+				pstt.close();
+				con.close();
+     %>
+	<h1>Make a normal bid!</h1>
+		<form method="post" action="verifyBid.jsp">
+			<table>
+				<tr>
+					<td>Price: <input type="text" name="price" value="0" maxlength="30" required/></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Place"/></td>
+				</tr>
+				
+			
+			</table>
+		</form>
+	<h1>Are you lazy? Make an AUTO-bid!</h1>
+		<form method="post" action="verifyBid.jsp">
+			<table>
+				<tr>
+					<td>Initial Price: <input type="text" name="price" value="0" maxlength="30" required/></td>
+				</tr>
+				<tr>
+					<td>Increments: <input type="text" name="increments" value="0" maxlength="30" required/></td>
+				</tr>
+				<tr>
+					<td>Upper Limit: <input type="text" name="upperLimit" value="0" maxlength="30" required/></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Place"/></td>
+				</tr>
+				
+			
+			</table>
+		</form>
 </body>
 </html>
+
+			
