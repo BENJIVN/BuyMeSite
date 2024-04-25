@@ -35,7 +35,7 @@
         <br><br>
         <table align="center">
             <tr>
-                <td><a href="Create.jsp">Question Board</a>
+                <td><a href="Q&Ahome.jsp">Question Board</a>
                 <td>|</td>
                 <td><a href="Account.jsp">Account</a></td>
                 <td>|</td>
