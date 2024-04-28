@@ -23,4 +23,7 @@
         ps.setBigDecimal(5, new BigDecimal(request.getParameter("upperLimit")));
         ps.setBoolean(6, true); // Assuming auto-bid is active by default
         ps.executeUpdate();
+    } catch(SQLException e){
+    	
+    }
 %>
