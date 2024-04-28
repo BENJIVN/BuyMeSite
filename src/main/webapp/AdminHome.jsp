@@ -69,6 +69,8 @@ import="com.cs336.pkg.*"
 		</table>
 	</form>
 
+<div> <a href="logout.jsp">Logout</a></div>
+
 
 <%-- <div class="header">
     <% if ((session.getAttribute("username") == null)) { %>

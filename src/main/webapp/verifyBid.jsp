@@ -1,61 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="com.cs336.pkg.*"%>
-<%@page import="java.io.*,java.util.*,java.sql.*, java.math.BigDecimal"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.cs336.pkg.*" %>
+<%@ page import="java.io.*,java.util.*,java.sql.*, java.math.BigDecimal" %>
 
 <%
     ApplicationDB db = new ApplicationDB();
-    Connection con = db.getConnection();
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet generatedKeys = null;
     try {
-        //con.setAutoCommit(false); // Disable auto-commit to handle transactions manually
-        
+        con = db.getConnection();
         String username = (String) session.getAttribute("username"); 
         if (username == null) {
             response.sendRedirect("login.jsp");
-            return; 
+            return;
         }
         
         String price = request.getParameter("price");
         String listingID = request.getParameter("listing_id");
-        
-        
+
+        if (listingID == null) {
+            out.println("<p>Error: Listing ID is required.</p>");
+            return;
+        }
+	
+        int listingId = Integer.parseInt(listingID);
+		
+        //Bids
         String insertBid = "INSERT INTO bids(price, bid_dt) VALUES(?, NOW())";
-        PreparedStatement ps = con.prepareStatement(insertBid, Statement.RETURN_GENERATED_KEYS);
+        ps = con.prepareStatement(insertBid, Statement.RETURN_GENERATED_KEYS);
         ps.setBigDecimal(1, new BigDecimal(price));
         ps.executeUpdate();
         
-        ResultSet generatedKeys = ps.getGeneratedKeys();
+        generatedKeys = ps.getGeneratedKeys();
         int bidID = 0;
         if (generatedKeys.next()) {
             bidID = generatedKeys.getInt(1);
         }
-        
+	
+        //Places
         String insertPlace = "INSERT INTO places(username, bid_id) VALUES(?, ?)";
         ps = con.prepareStatement(insertPlace);
         ps.setString(1, username);
         ps.setInt(2, bidID);
         ps.executeUpdate();
         
-        String insertListingBid = "INSERT INTO listingBids(listing_id, bid_id) VALUES(?, ?)";
+        //bidsOn
+        String insertListingBid = "INSERT INTO bidsOn(listing_id, bid_id) VALUES(?, ?)";
         ps = con.prepareStatement(insertListingBid);
-        ps.setInt(1, Integer.parseInt(listingID));
+        ps.setInt(1, listingId);
         ps.setInt(2, bidID);
         ps.executeUpdate();
 
-        String updateListingPrice = "UPDATE listings SET price = ? WHERE listing_id = ? AND price < ?";
+        //Update Listing Price
+        String updateListingPrice = "UPDATE listings SET initial_price = ? WHERE listing_id = ? AND initial_price < ?";
         ps = con.prepareStatement(updateListingPrice);
         ps.setBigDecimal(1, new BigDecimal(price));
-        ps.setString(2, listingID);
+        ps.setInt(2, listingId);
         ps.setBigDecimal(3, new BigDecimal(price));
         int updateCount = ps.executeUpdate();
-     
-        //con.commit();
         
+        
+        response.sendRedirect("Listings.jsp");
+    } catch (SQLException e) {
+        out.println("<p>Error processing request: " + e.getMessage() + "</p>");
+    } finally {
+        generatedKeys.close();
         ps.close();
         con.close();
-        response.sendRedirect("Listings.jsp");
-    } catch (SQLException e) {        
-    } finally {
-        
     }
 %>
