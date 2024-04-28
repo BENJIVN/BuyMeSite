@@ -6,8 +6,15 @@ import java.sql.SQLException;
 
 public class ApplicationDB {
 	
+	updateListings currentListings;
+	private static boolean thread = false; //thank you sesh 
+	
 	public ApplicationDB(){
-		
+		if (!thread) {
+			currentListings = new updateListings(getConnection());
+			currentListings.start();
+			thread = true;
+		}
 	}
 
 	public Connection getConnection(){

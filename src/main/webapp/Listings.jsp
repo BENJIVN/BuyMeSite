@@ -44,7 +44,6 @@ import="com.cs336.pkg.*"
 		            <option value="color">Color</option>
 		            <option value="year">Year</option>
 		            <option value="initial_price">Initial Price</option>
-		            <option value="min_sale">Min Sale Price</option>
 		            <option value="date_time">Closing Date/Time</option>
 		        </select>
 		   	</form>
@@ -56,8 +55,7 @@ import="com.cs336.pkg.*"
                 <th>Model</th>
                 <th>Color</th>
                 <th>Year</th>
-                <th>Initial Price</th>
-                <th>Min Sale Price</th>
+                <th>Price</th>
                 <th>Closing Date/Time</th>
                 <th>Open/Closed Status</th>
             </tr>
@@ -90,7 +88,7 @@ import="com.cs336.pkg.*"
                             <td><%= rs.getString("color") %></td>
                             <td><%= rs.getInt("year") %></td>
                             <td><%= initialPrice != null ? initialPrice.toPlainString() : "N/A" %></td>
-                            <td><%= minSale != null ? minSale.toPlainString() : "N/A" %></td>
+                            <%-- <td><%= minSale != null ? minSale.toPlainString() : "N/A" %></td> --%>
                             <td><%= rs.getTimestamp("date_time") != null ? rs.getTimestamp("date_time").toString() : "N/A" %></td>
                             <td><%= rs.getInt("open_close") == 0 ? "Open" : "Closed" %></td>
                             <td>
@@ -104,6 +102,10 @@ import="com.cs336.pkg.*"
                     }
                 } catch (SQLException e) {
                     out.println("Error retrieving listings: " + e.getMessage());
+                } finally{
+                	rs.close();
+                	ps.close();
+                	con.close();
                 }
             %>
         </table>
