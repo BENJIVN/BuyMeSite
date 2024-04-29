@@ -41,8 +41,15 @@ import="com.cs336.pkg.*"
 	ps.setString(7, closingDateTime);
 	ps.executeUpdate();
 	
+	//insert into listings posts //future use of posts to show user details
+	String postInsert = "INSERT INTO posts(listing_id, username)" + "VALUES((SELECT MAX(listing_id) FROM listings), ?)";
+	ps = con.prepareStatement(postInsert);
+	ps.setString(1, username);
+	ps.executeUpdate();
+	
+	
 	response.sendRedirect("Listings.jsp");
-	//insert into listings posts??
+	//insert into listings posts
 	
 	//stmt.close();
 	ps.close();

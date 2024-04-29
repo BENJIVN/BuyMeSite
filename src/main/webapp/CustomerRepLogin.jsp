@@ -4,18 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Customer Representative Login</title>
 </head>
 <body>
 <h2 style="text-align: center">Input customer representative login details:</h2>
 <form action="CheckCustomerRepLogin.jsp" method="POST">
 			<table style="margin: 0px auto;">
 			<tr>
-				<td> USERNAME: <input type="text" name="username" style="width: 70%;"/></td>
+				<td> USERNAME: <input type="text" name="rep_username" style="width: 70%;"/></td>
 			</tr>
 			
 			<tr>
-				<td>PASSWORD: <input type="password" name="password" style="width: 71%;"/></td>
+				<td>PASSWORD: <input type="password" name="rep_password" style="width: 71%;"/></td>
 			</tr>
 		
 			<tr>
