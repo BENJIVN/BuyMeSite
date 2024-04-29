@@ -15,6 +15,25 @@
             con = db.getConnection();
 
             int listingId = Integer.parseInt(request.getParameter("listing_id"));
+            
+            //Delete the referencing rows in auto_bids
+            String queryAutoBids = "DELETE FROM auto_bids WHERE listing_id = ?";
+            ps = con.prepareStatement(queryAutoBids);
+            ps.setInt(1, listingId);
+            ps.executeUpdate();
+            
+            // Delete bids associated with the listing through bidsOn
+            ps = con.prepareStatement("SELECT bid_id FROM bidsOn WHERE listing_id = ?");
+            ps.setInt(1, listingId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PreparedStatement ps2 = con.prepareStatement("DELETE FROM bids WHERE bid_id = ?");
+                ps2.setInt(1, rs.getInt("bid_id"));
+                ps2.executeUpdate();
+                ps2.close();
+            }
+            rs.close();
+            ps.close();
 
             String sql = "DELETE FROM listings WHERE listing_id = ?";
             ps = con.prepareStatement(sql);
