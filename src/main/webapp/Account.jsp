@@ -20,14 +20,14 @@
         <h2>Bids</h2>
         <table align="center">
             <tr>
-                <td><a href="UserBids.jsp">View Your Bids</a></td>
+                <td><a href="userBids.jsp">View Your Bids</a></td>
             </tr>
         </table>
         
         <h2>Listings/Auction</h2>
          <table align="center">
             <tr>
-                <td><a href="UserListings.jsp">View Your Listings</a></td>
+                <td><a href="userListings.jsp">View Your Listings</a></td>
             </tr>
         </table>
         
@@ -37,6 +37,13 @@
                 <td><a href="Interests.jsp">View Your Interests</a></td>
             </tr>
         </table>
+        
+        <h2>Search for a user!</h2>
+        	<form action = "userActivity.jsp" method = "POST">
+        	<td> USERNAME: <input type="text" name="username" style="width: 10%;"/></td>
+       		<td><input type ="submit" value = "Search"/><td>
+       	</form>
+       
 
 		<h2>Delete Account</h2>
        	<form action = "deleteAccount.jsp" method = "POST">

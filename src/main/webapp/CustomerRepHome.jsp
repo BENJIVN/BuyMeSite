@@ -15,7 +15,7 @@
          <h2 style="text-align: center">CUSTOMER REP DASHBOARD</h2>
         <table align="center">
             <tr>
-            	<td><a href="Q&Ahome.jsp">Q&A Home</a></td>
+            	<td><a href="Q&ACRHome.jsp">Q&A Home</a></td>
            	</tr>
            	<tr>
                 <td><a href="AllBids.jsp">View/Delete Bids</a></td>

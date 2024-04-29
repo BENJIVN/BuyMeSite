@@ -52,37 +52,39 @@
                 <th>Answer</th>
             </tr>
             <%
-            	String sort = request.getParameter("sortby");
-	            List<String> validSortFields = Arrays.asList("pending", "in_progress", "complete");
-	            String sortByField = "pending"; //default sort field
+	            String sort = request.getParameter("sortby");
+	            List<String> validSortFields = Arrays.asList("all", "pending", "in_progress", "complete");
+	            String sortByField = "all"; //default sort field
 	            
 	            if(sort != null && validSortFields.contains(sort)){
 	            	sortByField = sort;
 	            }
 	            
-                Connection con = null;
-                PreparedStatement ps = null;
-                ResultSet rs = null;
-                
-                try {
-                    ApplicationDB db = new ApplicationDB();
-                    con = db.getConnection();
-                    String query = "SELECT q.question_id, u.username, q.status, q.question, q.answer FROM questions q INNER JOIN users u ON q.username = u.username ORDER BY FIELD(q.status, 'pending', 'in_progress', 'complete')";
-                    ps = con.prepareStatement(query);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-            %>
+	            Connection con = null;
+	            PreparedStatement ps = null;
+	            ResultSet rs = null;
+	            
+	            try {
+	                ApplicationDB db = new ApplicationDB();
+	                con = db.getConnection();
+	                String query = "SELECT qa.qa_id, u.username, qa.status, qa.question, qa.answer FROM qa INNER JOIN users u ON qa.username = u.username";
+	                if (!"all".equals(sortByField)) {
+	                    query += " WHERE qa.status = ?";
+	                }
+	                query += " ORDER BY qa.qa_id";
+	                ps = con.prepareStatement(query);
+	                if (!"all".equals(sortByField)) {
+	                    ps.setString(1, sortByField);
+	                }
+	                rs = ps.executeQuery();
+	                while (rs.next()) {
+	            %>
                         <tr>
-                            <td><%= rs.getInt("question_id") %></td>
+                            <td><%= rs.getInt("qa_id") %></td>
                             <td><%= rs.getString("username") %></td>
                             <td><%= rs.getString("status") %></td>
                             <td><%= rs.getString("question") %></td>
-                            <td><%= rs.getString("answer") != null ? rs.getString("answer") : "N/A" %></td>
-                            <td>
-                                <% if(rs.getString("status").equals("pending")) { %>
-                                    <a href="editQuestion.jsp?question_id=<%= rs.getInt("question_id") %>">Edit</a>
-                                <% } %>
-                            </td>
+                            <td><%= rs.getString("answer") != null ? rs.getString("answer") : "N/A" %></td>                           
                         </tr>
             <% 
                     }
