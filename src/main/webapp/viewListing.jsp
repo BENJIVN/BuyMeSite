@@ -6,6 +6,7 @@
 <title>BuyMe: Listing Details</title>
 </head>
 <body>
+	<div><a href="Listings.jsp">Go Back</a></div>
 	 <%
         ApplicationDB db = new ApplicationDB();
         Connection con = null;
@@ -25,8 +26,9 @@
             String listingIdStr = request.getParameter("listing_id");
             if (listingIdStr != null && !listingIdStr.isEmpty()) {
                 listingId = Integer.parseInt(listingIdStr); 
+                //out.println("<p>listingId = "+ listingId);
             } else {
-                out.println("<p>Error: No listing ID provided.</p>");
+                out.println("<p>Error: No listing ID provided in view Listing.</p>");
                 return;
             }
 			
@@ -123,28 +125,39 @@
             				</form>
             			<% 
             				}
-            				rs.close(); 
+            				
             			%>
             			
             			
             		<h1>Are you lazy? Make an AUTO-bid!</h1>
+            			<%
+            				ps = con.prepareStatement("SELECT listing_id FROM listings WHERE listing_id = ?");
+            				ps.setInt(1, listingId);
+            				rs = ps.executeQuery();
+            				if(rs.next()) {           					
+            			%>
+            			
             			<form method="post" action="verifyAutoBid.jsp">
             				<table>
-            					<tr>
-            						<td>Initial Price: <input type="text" name="price" value="0" maxlength="30" required/></td>
-            					</tr>
-            					<tr>
-            						<td>Increments: <input type="text" name="increments" value="0" maxlength="30" required/></td>
-            					</tr>
-            					<tr>
-            						<td>Upper Limit: <input type="text" name="upperLimit" value="0" maxlength="30" required/></td>
-            					</tr>
-            					<tr>
-            						<td><input type="submit" value="Place"/></td>
+            					<tr>           						
+            						<td>Increments: 
+            							<input type="text" name="increments" value="0" maxlength="30" required/></td>
+            						<td>Upper Limit: 
+            							<input type="text" name="upperLimit" value="0" maxlength="30" required/></td>           										
+            						<td>
+            						<%-- <%
+            						out.println("Debug - Current listing ID: " + listingId);
+            						%> --%>
+	            						<input type="hidden" name="listing_id" value="<%= rs.getInt("listing_id") %>" />
+	            						<input type="submit" value="Place"/>
+            						</td>
             					</tr>
             				
             				</table>
             			</form>
+            		<%
+            		} 
+            		%>
         <%
         		//handle closed listing scenario
 	         } else {
@@ -170,8 +183,31 @@
 	   	        		out.println("<p>Listing not found.</p>");
 	   	        } 
 	            	            
-	        }finally{
-	            	        	
+	        }finally {
+	            // Close ResultSet
+	            if (rs != null) {
+	                try {
+	                    rs.close();
+	                } catch (SQLException e) {
+	                    out.println("<p>Error closing ResultSet: " + e.getMessage() + "</p>");
+	                }
+	            }
+	            // Close PreparedStatement
+	            if (ps != null) {
+	                try {
+	                    ps.close();
+	                } catch (SQLException e) {
+	                    out.println("<p>Error closing PreparedStatement: " + e.getMessage() + "</p>");
+	                }
+	            }
+	            // Close Connection
+	            if (con != null) {
+	                try {
+	                    con.close();
+	                } catch (SQLException e) {
+	                    out.println("<p>Error closing Connection: " + e.getMessage() + "</p>");
+	                }
+	            }
 	        }
 	   	%>    			
        

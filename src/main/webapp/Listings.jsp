@@ -93,12 +93,12 @@ import="com.cs336.pkg.*"
                             <td><%= rs.getInt("open_close") == 0 ? "Open" : "Closed" %></td>
                             <td>
 		                        <form action="viewListing.jsp" method="post">
-		                            <input type="hidden" name="listing_id" value="<%= rs.getInt("listing_id") %>" />
+		                            <input type="hidden" name="listing_id" value="<%= rs.getString("listing_id") %>" />
 		                            <input type="submit" value="Details" />
 		                        </form>
                    			</td>
                         </tr>
-                        <%
+              <%
                     }
                 } catch (SQLException e) {
                     out.println("Error retrieving listings: " + e.getMessage());
