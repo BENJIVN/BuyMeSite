@@ -29,12 +29,12 @@ import="com.cs336.pkg.*"
 		ps.setString(1, username);
 		ps.executeUpdate();
 		
-		
+		response.sendRedirect("login.jsp");
 		
 		stmt.close();
 		ps.close();
 		con.close();
 	%>
-<jsp:forward page="login.jsp">
+<%-- <jsp:forward page="login.jsp"> --%>
 </body>
 </html>

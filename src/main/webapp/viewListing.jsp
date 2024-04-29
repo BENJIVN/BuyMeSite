@@ -164,7 +164,7 @@
 	    %>			
 <!-- 	    			<script>alert('Congratulations, you won the auction!');</script>
 	    			<script>alert('The auction has closed. Thank you for participating.');</script> -->
-	    			<h1>WINNER OF THE BID!</h1>
+	    			<!-- <h1>WINNER OF THE BID!</h1> -->
 	    			<h1>STATUS OF LISTING: COMPLETE</h1>
 	   	 			<h1>Listing Details</h1>
        	                <p>Make: <%= rs.getString("make") %></p>

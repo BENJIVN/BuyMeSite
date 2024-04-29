@@ -34,7 +34,7 @@ import="com.cs336.pkg.*"
 			ps.executeUpdate();
 		}
 
-		/* response.sendRedirect("Interests.jsp"); */
+		response.sendRedirect("Interests.jsp");
 	} catch (SQLException e) {
 		out.println("SQL Error");
 	} finally {
