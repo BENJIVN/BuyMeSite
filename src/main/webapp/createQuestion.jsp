@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        <input type="hidden" name="username" value="<%= session.getAttribute("username") %>">
+                        <input type="hidden" name="username" value="<%= session.getAttribute("username") != null ? session.getAttribute("username").toString() : "" %>">
                         <input type="submit" value="Submit Question">
                     </td>
                 </tr>
