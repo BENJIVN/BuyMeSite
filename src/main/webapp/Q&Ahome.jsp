@@ -41,6 +41,14 @@
 		            <option value="complete">Complete</option>
 		        </select>
 		   	</form>
+		   	
+		   	<!--Search here  -->
+		   	<form action="" method="get">
+	            <label for="search">Search:</label>
+	            <input type="text" name="search" id="search" placeholder="Enter keyword">
+	            <input type="submit" value="Search">
+        	</form>
+		   	
 		</div>
          <h2>All Questions</h2>
         <table align="center" border="1">
@@ -51,7 +59,8 @@
                 <th>Question</th>
                 <th>Answer</th>
             </tr>
-            <%
+            <%	
+            	String searchKeyword = request.getParameter("search");
 	            String sort = request.getParameter("sortby");
 	            List<String> validSortFields = Arrays.asList("all", "pending", "in_progress", "complete");
 	            String sortByField = "all"; //default sort field
@@ -65,18 +74,28 @@
 	            ResultSet rs = null;
 	            
 	            try {
-	                ApplicationDB db = new ApplicationDB();
-	                con = db.getConnection();
-	                String query = "SELECT qa.qa_id, u.username, qa.status, qa.question, qa.answer FROM qa INNER JOIN users u ON qa.username = u.username";
-	                if (!"all".equals(sortByField)) {
-	                    query += " WHERE qa.status = ?";
-	                }
-	                query += " ORDER BY qa.qa_id";
-	                ps = con.prepareStatement(query);
-	                if (!"all".equals(sortByField)) {
-	                    ps.setString(1, sortByField);
-	                }
-	                rs = ps.executeQuery();
+	            	 ApplicationDB db = new ApplicationDB();
+	                 con = db.getConnection();
+	                 String query = "SELECT qa.qa_id, u.username, qa.status, qa.question, qa.answer FROM qa INNER JOIN users u ON qa.username = u.username";
+	                 // search condition
+	                 if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	                     query += " WHERE qa.question LIKE ?";
+	                     if (!"all".equals(sortByField)) {
+	                         query += " AND qa.status = ?";
+	                     }
+	                 } else if (!"all".equals(sortByField)) {
+	                     query += " WHERE qa.status = ?";
+	                 }
+	                 query += " ORDER BY qa.qa_id";
+	                 ps = con.prepareStatement(query);	                 
+	                 int paramIndex = 1;
+	                 if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	                     ps.setString(paramIndex++, "%" + searchKeyword.trim() + "%");
+	                 }
+	                 if (!"all".equals(sortByField)) {
+	                     ps.setString(paramIndex, sortByField);
+	                 }
+	                 rs = ps.executeQuery();
 	                while (rs.next()) {
 	            %>
                         <tr>
