@@ -10,6 +10,13 @@
     <div style="text-align: center">
         <h1>Account Manager</h1>
         
+        <h2>Return to Homepage</h2>
+        <table align="center">
+            <tr>
+                <td><a href="Home.jsp">Home</a></td>
+            </tr>
+        </table>
+        
         <h2>Bids</h2>
         <table align="center">
             <tr>
@@ -21,6 +28,13 @@
          <table align="center">
             <tr>
                 <td><a href="Listings.jsp">View Your Listings</a></td>
+            </tr>
+        </table>
+        
+        <h2>Your Interests</h2>
+        <table align="center">
+            <tr>
+                <td><a href="Interests.jsp">View Your Interests</a></td>
             </tr>
         </table>
 

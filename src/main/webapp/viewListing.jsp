@@ -56,15 +56,14 @@
             	    %>
             	           
             		<h1>Interested in the listing?</h1>
-            			<form method="post" action="verifyInterested.jsp">
-            				<table>
-            					<tr>
-            						<td><input type="submit" value="Keep Me Alerted!"/></td>
-            					</tr>
-            					
-            				
-            				</table>
-            			</form>
+					<form method="post" action="verifyInterested.jsp">
+					    <input type="hidden" name="listing_id" value="<%= listingId %>" />
+					    <table>
+					        <tr>
+					            <td><input type="submit" value="Keep Me Alerted!"/></td>
+					        </tr>
+					    </table>
+					</form>
             			
             			
             		<h1>Bid History</h1>
