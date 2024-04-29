@@ -46,6 +46,7 @@
         <table align="center" border="1">
             <tr>
                 <th>Question ID</th>
+                <th>Username</th>
                 <th>Status</th>
                 <th>Question</th>
                 <th>Answer</th>
@@ -66,13 +67,14 @@
                 try {
                     ApplicationDB db = new ApplicationDB();
                     con = db.getConnection();
-                    String query = "SELECT question_id, status, question, answer FROM questions ORDER BY FIELD(status, 'pending', 'in_progress', 'complete')";
+                    String query = "SELECT q.question_id, u.username, q.status, q.question, q.answer FROM questions q INNER JOIN users u ON q.username = u.username ORDER BY FIELD(q.status, 'pending', 'in_progress', 'complete')";
                     ps = con.prepareStatement(query);
                     rs = ps.executeQuery();
                     while (rs.next()) {
             %>
                         <tr>
                             <td><%= rs.getInt("question_id") %></td>
+                            <td><%= rs.getString("username") %></td>
                             <td><%= rs.getString("status") %></td>
                             <td><%= rs.getString("question") %></td>
                             <td><%= rs.getString("answer") != null ? rs.getString("answer") : "N/A" %></td>
