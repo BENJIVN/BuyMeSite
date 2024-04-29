@@ -27,19 +27,19 @@ import="com.cs336.pkg.*"
 		String listingId = request.getParameter("listing_id");
 		if (listingId != null && !listingId.isEmpty()) {
 			// Prepare the delete statement
-			String sqlDeleteInterest = "DELETE FROM interests WHERE username = ? AND listing_id = ?";
-			ps = con.prepareStatement(sqlDeleteInterest);
+			String delete = "DELETE FROM interests WHERE username = ? AND listing_id = ?";
+			ps = con.prepareStatement(delete);
 			ps.setString(1, username);
 			ps.setString(2, listingId);
 			ps.executeUpdate();
 		}
 
-		response.sendRedirect("Interests.jsp");
+		/* response.sendRedirect("Interests.jsp"); */
 	} catch (SQLException e) {
-		out.println("SQL Error: " + e.getMessage());
+		out.println("SQL Error");
 	} finally {
-		if (ps != null) try { ps.close(); } catch (SQLException e) { /* ignored */ }
-		if (con != null) try { con.close(); } catch (SQLException e) { /* ignored */ }
+		ps.close();
+		con.close();
 	}
 %>
 
