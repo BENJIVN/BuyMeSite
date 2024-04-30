@@ -28,7 +28,7 @@
 
 		if (count > 0) {
 			out.println("<p>Bid deleted successfully.</p>");
-			out.println("<a href='UserBids.jsp'>Back to Bids</a>");
+			out.println("<a href='userBids.jsp'>Back to Bids</a>");
 		} else {
 			out.println("<p>Error: Bid not found or could not be deleted.</p>");
 		}

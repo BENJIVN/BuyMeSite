@@ -78,7 +78,7 @@
 			}
 	}
 
-	out.println("<a href='UserListings.jsp'>Back to Listings</a>");
+	out.println("<a href='userListings.jsp'>Back to Listings</a>");
 	%>
 </body>
 </html>

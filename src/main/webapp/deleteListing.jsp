@@ -14,14 +14,21 @@
 
 	try {
 		con = db.getConnection();
-
 		int listingId = Integer.parseInt(request.getParameter("listing_id"));
 
-		//Delete the referencing rows in auto_bids
+		// Delete the referencing rows in interests
+		String queryInterests = "DELETE FROM interests WHERE listing_id = ?";
+		ps = con.prepareStatement(queryInterests);
+		ps.setInt(1, listingId);
+		ps.executeUpdate();
+		ps.close();
+
+		// Delete the referencing rows in auto_bids
 		String queryAutoBids = "DELETE FROM auto_bids WHERE listing_id = ?";
 		ps = con.prepareStatement(queryAutoBids);
 		ps.setInt(1, listingId);
 		ps.executeUpdate();
+		ps.close();
 
 		// Delete bids associated with the listing through bidsOn
 		ps = con.prepareStatement("SELECT bid_id FROM bidsOn WHERE listing_id = ?");
@@ -36,10 +43,12 @@
 		rs.close();
 		ps.close();
 
+		// Finally, delete the listing
 		String sql = "DELETE FROM listings WHERE listing_id = ?";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, listingId);
 		int count = ps.executeUpdate();
+		ps.close();
 
 		if (count > 0) {
 			out.println("<p>Listing deleted successfully.</p>");
@@ -50,8 +59,8 @@
 	} catch (SQLException e) {
 		out.println("<p>Error processing request: " + e.getMessage() + "</p>");
 	} finally {
-		ps.close();
-		con.close();
+		if (ps != null) ps.close();
+		if (con != null) con.close();
 	}
 
 	out.println("<a href='AllListings.jsp'>Back to Listings</a>");
