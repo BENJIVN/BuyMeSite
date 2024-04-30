@@ -62,12 +62,19 @@ import="com.cs336.pkg.*"
 	<form action="CreateSalesReport.jsp">
 		<table>
 			<tr>
-				
+				<th>Start Date</th>
+				<td><input type="datetime-local" required name="startdate"></td>
 			</tr>
-		
-		
+			<tr>
+				<th>End Date</th>
+				<td><input type="datetime-local" required name="enddate"></td>
+			</tr>
 		</table>
+		
+		<input type="submit" value="Generate">
 	</form>
+
+<br><br>
 
 <div> <a href="logout.jsp">Logout</a></div>
 

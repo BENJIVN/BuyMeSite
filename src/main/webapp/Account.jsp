@@ -19,17 +19,17 @@
         
         <h2>Bids</h2>
         <table align="center">
-            <tr>
-                <td><a href="userBids.jsp">View Your Bids</a></td>
-            </tr>
-        </table>
-        
+	    <tr>
+	        <td><a href="userBids.jsp">View Your Bids</a></td>
+	    </tr>
+		</table>
+   	     
         <h2>Listings/Auction</h2>
-         <table align="center">
-            <tr>
-                <td><a href="userListings.jsp">View Your Listings</a></td>
-            </tr>
-        </table>
+       <table align="center">
+	    <tr>
+	        <td><a href="userListings.jsp">View Your Listings</a></td>
+	    </tr>
+		</table>
         
         <h2>Your Interests</h2>
         <table align="center">
