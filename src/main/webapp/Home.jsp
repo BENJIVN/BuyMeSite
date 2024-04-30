@@ -47,12 +47,12 @@
     			"SELECT l.listing_id, l.initial_price, " +
     		    "(SELECT MAX(b.price) FROM bids b INNER JOIN bidsOn bo ON b.bid_id = bo.bid_id WHERE bo.listing_id = l.listing_id) AS highest_bid, " +
     		    "(SELECT b.price FROM bids b INNER JOIN places p ON b.bid_id = p.bid_id WHERE p.username = ? AND bo.listing_id = l.listing_id ORDER BY b.bid_dt DESC LIMIT 1) AS user_max_bid " +
-    		"FROM listings l " +
-    		"INNER JOIN bidsOn bo ON l.listing_id = bo.listing_id " +
-    		"INNER JOIN places p ON p.username = ? " +
-    		"WHERE l.open_close = 0 AND p.username = ? " +
-    		"GROUP BY l.listing_id " +
-    		"HAVING user_max_bid < highest_bid");
+	    		"FROM listings l " +
+	    		"INNER JOIN bidsOn bo ON l.listing_id = bo.listing_id " +
+	    		"INNER JOIN places p ON p.username = ? " +
+	    		"WHERE l.open_close = 0 AND p.username = ? " +
+	    		"GROUP BY l.listing_id " +
+	    		"HAVING user_max_bid < highest_bid");
 
         ps.setString(1, username); // For the first subquery
         ps.setString(2, username); // For the join on places
@@ -62,30 +62,30 @@
     		//table that shows which automatic bids are no longer valid
   		ps = con.prepareStatement(
   				"SELECT l.listing_id, l.initial_price, MAX(b.price) AS highest_bid, ab.upper_limit " +
-  					    "FROM auto_bids ab " +
-  					    "INNER JOIN listings l ON ab.listing_id = l.listing_id " +
-  					    "INNER JOIN bidsOn bo ON bo.listing_id = l.listing_id " +
-  					    "INNER JOIN bids b ON b.bid_id = bo.bid_id " +
-  					    "WHERE ab.username = ? AND l.open_close = 0 " +
-  					    "GROUP BY l.listing_id, l.initial_price, ab.upper_limit " +
-  					    "HAVING MAX(b.price) > ab.upper_limit");
+			    "FROM auto_bids ab " +
+			    "INNER JOIN listings l ON ab.listing_id = l.listing_id " +
+			    "INNER JOIN bidsOn bo ON bo.listing_id = l.listing_id " +
+			    "INNER JOIN bids b ON b.bid_id = bo.bid_id " +
+			    "WHERE ab.username = ? AND l.open_close = 0 " +
+			    "GROUP BY l.listing_id, l.initial_price, ab.upper_limit " +
+			    "HAVING MAX(b.price) > ab.upper_limit");
     	ps.setString(1, username);
     	ResultSet autoBidsLost = ps.executeQuery();	
     		
     		//table that shows a user's won auctions
     	ps = con.prepareStatement(
     			"SELECT l.listing_id, l.initial_price, b.price AS winning_bid " +
-    					"FROM listings l " +
-    					"INNER JOIN bidsOn bo ON l.listing_id = bo.listing_id " +
-    					"INNER JOIN bids b ON bo.bid_id = b.bid_id " +
-    					"INNER JOIN places p ON p.bid_id = b.bid_id " +
-    					"WHERE l.open_close = 1 AND b.price = ( " +
-    					    "SELECT MAX(b2.price) " +
-    					    "FROM bids b2 " +
-    					    "INNER JOIN bidsOn bo2 ON b2.bid_id = bo2.bid_id " +
-    					    "WHERE bo2.listing_id = l.listing_id " +
-    					") AND p.username = (?) " +
-    					"GROUP BY l.listing_id, l.initial_price, b.price");
+				"FROM listings l " +
+				"INNER JOIN bidsOn bo ON l.listing_id = bo.listing_id " +
+				"INNER JOIN bids b ON bo.bid_id = b.bid_id " +
+				"INNER JOIN places p ON p.bid_id = b.bid_id " +
+				"WHERE l.open_close = 1 AND b.price = ( " +
+			    "SELECT MAX(b2.price) " +
+			    "FROM bids b2 " +
+			    "INNER JOIN bidsOn bo2 ON b2.bid_id = bo2.bid_id " +
+			    "WHERE bo2.listing_id = l.listing_id " +
+				") AND p.username = (?) " +
+				"GROUP BY l.listing_id, l.initial_price, b.price");
     	ps.setString(1, username);
     	ResultSet auctionsWon = ps.executeQuery();
     		
