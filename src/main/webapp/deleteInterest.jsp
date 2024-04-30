@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*" 
-import="com.cs336.pkg.*"
-%>
+	pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"
+	import="com.cs336.pkg.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@ import="com.cs336.pkg.*"
 </head>
 <body>
 
-<%
+	<%
 	// Database connection
 	ApplicationDB db = new ApplicationDB();
 	Connection con = db.getConnection();
@@ -41,7 +40,7 @@ import="com.cs336.pkg.*"
 		ps.close();
 		con.close();
 	}
-%>
+	%>
 
 </body>
 </html>
