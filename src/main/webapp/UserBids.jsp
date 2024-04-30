@@ -18,7 +18,6 @@
 			<th>Bid Id</th>
 			<th>Price</th>
 			<th>Date/Time</th>
-			<th>Actions</th>
 		</tr>
 		<%
 		Connection con = null;
@@ -42,13 +41,6 @@
 			<td><%=rs.getInt("bid_id")%></td>
 			<td><%=rs.getBigDecimal("price").toPlainString()%></td>
 			<td><%=rs.getTimestamp("bid_dt").toString()%></td>
-			<td>
-				<form action="deleteUserBid.jsp" method="post">
-					<input type="hidden" name="bid_id"
-						value='<%=rs.getInt("bid_id")%>' /> <input type="submit"
-						value="Delete" />
-				</form>
-			</td>
 		</tr>
 		<%
 		}
