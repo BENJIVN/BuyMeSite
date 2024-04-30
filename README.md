@@ -10,10 +10,6 @@ Admin:
 - username: admin
 - password: adminpassword
 
-Customer Representative: 
-- username: benji
-- password: Breachmain1$
-
 Contents:
 - projectCode.zip: project code
 - schema.sql: sql file for DB schema
