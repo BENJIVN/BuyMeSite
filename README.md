@@ -16,4 +16,4 @@ Contents:
 - ER diagram: entity relationship diagram for project
 - ProjectChecklist (checklist.pdf): checklist of implemented items
 - README.md: admin and customer representative credentials, etc.
-- Demo video link: 
+- Demo video link: https://drive.google.com/file/d/1I10bvSHk4PxKM9Eoi21WcEtnO1W8tys_/view?usp=drive_link
